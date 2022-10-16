@@ -1,8 +1,17 @@
 <script lang="ts">
-  let i: number = 0;
-  const increment = () => i++;
+  import { provider } from "./lib/ethprovider";
+  import BlockCard from "./lib/BlockCard.svelte";
+
+  let blocks: number[] = [];
+  provider.on("block", (num) => {
+    blocks.push(num);
+    blocks = blocks;
+  });
 </script>
 
-<main>
-  <button class="btn" on:click={increment}>Test {i}</button>
+<main class="flex items-center justify-center h-screen">
+  {blocks.length}
+  {#each blocks as block}
+    <BlockCard blockNumber={block} />
+  {/each}
 </main>
