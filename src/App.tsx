@@ -1,8 +1,25 @@
-import type { Component } from 'solid-js';
+import { Component, createSignal } from "solid-js";
+import ethprovider from "./ethprovider";
+import Block from "./Block";
 
 const App: Component = () => {
+  const [blocks, setBlocks] = createSignal([]);
+  ethprovider.on("block", (num) => {
+    setBlocks([...blocks(), num]);
+    console.log(blocks(), num);
+  });
+
   return (
-    <p class="text-4xl text-green-700 text-center py-20">Hello tailwind!</p>
+    <div>
+      {blocks()
+        .slice()
+        .reverse()
+        .map((blockNum) => (
+          <div>
+            <Block num={blockNum} />
+          </div>
+        ))}
+    </div>
   );
 };
 
