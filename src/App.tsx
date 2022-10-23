@@ -1,24 +1,10 @@
-import { Component, createSignal } from "solid-js";
-import ethprovider from "./ethprovider";
-import Block from "./Block";
+import { Component } from "solid-js";
+import BlockList from "./BlockList";
 
 const App: Component = () => {
-  const [blocks, setBlocks] = createSignal([]);
-  ethprovider.on("block", (num) => {
-    setBlocks([...blocks(), num]);
-    console.log(blocks(), num);
-  });
-
   return (
-    <div>
-      {blocks()
-        .slice()
-        .reverse()
-        .map((blockNum) => (
-          <div>
-            <Block num={blockNum} />
-          </div>
-        ))}
+    <div class="flex justify-center">
+      <BlockList />
     </div>
   );
 };
